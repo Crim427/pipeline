@@ -21,8 +21,36 @@ func TestRoot(t *testing.T) {
 	body := gin.H{
 		"location": "root",
 	}
+	method := "GET"
+	testEndpoint(t, "/", body, method)
+}
+
+func TestAdd(t *testing.T) {
+	body := gin.H{
+		"location": "add",
+	}
+	method := "GET"
+	testEndpoint(t, "/add", body, method)
+}
+
+func TestRemove(t *testing.T) {
+	body := gin.H{
+		"location": "remove",
+	}
+	method := "DELETE"
+	testEndpoint(t, "/remove", body, method)
+}
+func TestList(t *testing.T) {
+	body := gin.H{
+		"location": "list",
+	}
+	method := "GET"
+	testEndpoint(t, "/list", body, method)
+}
+
+func testEndpoint(t *testing.T, path string, body gin.H, method string) {
 	r := router()
-	w := request(r, "GET", "/")
+	w := request(r, method, path)
 	assert.Equal(t, http.StatusOK, w.Code)
 	var response map[string]string
 	err := json.Unmarshal([]byte(w.Body.String()), &response)
@@ -31,5 +59,4 @@ func TestRoot(t *testing.T) {
 	assert.Nil(t, err)
 	assert.True(t, exists)
 	assert.Equal(t, body["location"], value)
-
 }

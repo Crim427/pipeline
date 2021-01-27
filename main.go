@@ -31,7 +31,7 @@ func router() *gin.Engine {
 			"location": "add",
 		})
 	})
-	r.GET("/remove", func(c *gin.Context) {
+	r.DELETE("/remove", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"location": "remove",
 		})
